@@ -1,0 +1,24 @@
+version: '2.0'
+services:
+  app:
+      image: alpine/git
+      container_name: app
+      ports:
+        - 8080:80
+      networks:
+        - mysql-compose-network
+      depends_on:
+        - db
+  db:
+    image: mysql
+    container_name: db
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=loja
+    networks:
+      - mysql-compose-network
+
+networks: 
+  mysql-compose-network:
+    driver: bridge
